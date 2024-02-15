@@ -1,7 +1,7 @@
 Simple media file manager
 
-Install and execute
 required: composer and node instaled
+Affter instaled requireds execute:
 ```bash
 composer update
 php artisan serve
