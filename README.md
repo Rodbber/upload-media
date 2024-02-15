@@ -1,6 +1,6 @@
 Simple media file manager
 
-required: composer and node instaled
+required: composer and node instaled <br>
 Affter instaled requireds execute:
 ```bash
 composer update
