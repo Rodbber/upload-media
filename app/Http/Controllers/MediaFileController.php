@@ -10,9 +10,22 @@ use Ramsey\Uuid\Uuid;
 
 class MediaFileController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return MediaFile::get();
+        $model = MediaFile::search($request->search);
+        if($request->has('sortBy')){
+            foreach ($request->sortBy as $valeu) {
+                $model->orderBy($valeu['key'], $valeu['order']);
+            }
+        }
+
+        if($request->itemsPerPage && $request->itemsPerPage != -1 ){
+            return $model->paginate($request->itemsPerPage);
+        }else{
+            $all = $model->get();
+            return ['data' => $all, 'total' => $all->count()];
+        }
+
     }
 
     public function store(MediaFileRequest $request)
