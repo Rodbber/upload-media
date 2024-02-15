@@ -43,6 +43,16 @@ class MediaFileController extends Controller
         }
     }
 
+    public function search(Request $request){
+        try {
+            $search = $request->search;
+            $data = MediaFile::search($search)->get();
+            return response()->json(['data' => $data]);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th->getMessage()], 500);
+        }
+    }
+
     public function destroy(string $id)
     {
         try {
