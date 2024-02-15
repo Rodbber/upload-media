@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('file_name');
             $table->string('extension');
+            $table->string('full_url');
             $table->timestamps();
         });
     }
