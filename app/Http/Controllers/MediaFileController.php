@@ -21,7 +21,7 @@ class MediaFileController extends Controller
             $files = $request->file('files');
             foreach ($files as $file) {
                 $extension = $file->extension();
-                $fileName = $file->getClientOriginalName();
+                $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                 $uuidFilePathName = Uuid::uuid4() . ".$extension";
                 $file->storeAs('public/media_files', $uuidFilePathName);
                 MediaFile::create(['file_name' => $fileName, 'extension' => $extension, 'full_url' => Storage::url('public/media_files/' . "$uuidFilePathName")]);
@@ -30,7 +30,10 @@ class MediaFileController extends Controller
         } catch (\Throwable $th) {
             return response()->json(['message' => $th->getMessage()], 500);
         }
+    }
 
+    public function show($id){
+        return redirect()->away(MediaFile::find($id)->fileUrl);
     }
 
     public function fileRename(Request $request, $id){
